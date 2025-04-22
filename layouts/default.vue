@@ -31,23 +31,6 @@ onUnmounted(() => {
         <span>Furniro</span>
       </div>
 
-      <nav
-        v-show="isMenuVisible || isDesktop"
-        class="navbar__center"
-        :class="{ 'navbar__center--visible': isMenuVisible }"
-      >
-        <ul class="navbar__menu">
-          <li><NuxtLink to="/">Home</NuxtLink></li>
-          <li><NuxtLink to="/shop">Shop</NuxtLink></li>
-          <li><NuxtLink to="/about">About</NuxtLink></li>
-          <li><NuxtLink to="/contact">Contact</NuxtLink></li>
-        </ul>
-
-        <button class="navbar__close" aria-label="Close menu" @click="toggleMenu">
-          <Icon name="material-symbols:close-rounded" size="2.8rem" />
-        </button>
-      </nav>
-
       <div class="navbar__right">
         <button aria-label="Search"><Icon name="material-symbols:search" size="2.8rem" /></button>
         <button aria-label="Favorites">
@@ -61,13 +44,42 @@ onUnmounted(() => {
         </button>
       </div>
     </header>
+
+    <!-- Desktop nav -->
+    <nav v-if="isDesktop" class="navbar__desktop">
+      <ul>
+        <li><NuxtLink to="/">Home</NuxtLink></li>
+        <li><NuxtLink to="/shop">Shop</NuxtLink></li>
+        <li><NuxtLink to="/about">About</NuxtLink></li>
+        <li><NuxtLink to="/contact">Contact</NuxtLink></li>
+      </ul>
+    </nav>
+
+    <!-- Mobile menu -->
+    <transition name="slide">
+      <nav v-show="isMenuVisible && !isDesktop" class="navbar__mobile">
+        <button class="navbar__close" aria-label="Close menu" @click="toggleMenu">
+          <Icon name="material-symbols:close-rounded" size="2.8rem" />
+        </button>
+        <ul>
+          <li><NuxtLink to="/">Home</NuxtLink></li>
+          <li><NuxtLink to="/shop">Shop</NuxtLink></li>
+          <li><NuxtLink to="/about">About</NuxtLink></li>
+          <li><NuxtLink to="/contact">Contact</NuxtLink></li>
+        </ul>
+      </nav>
+    </transition>
+
+    <!-- Overlay -->
+    <div v-if="isMenuVisible && !isDesktop" class="overlay" @click="toggleMenu" />
+
     <slot />
     <footer>Footer</footer>
-    <div v-show="isMenuVisible" class="overlay" />
   </div>
 </template>
 
 <style lang="scss" scoped>
+// Header
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -87,62 +99,6 @@ onUnmounted(() => {
     }
   }
 
-  &__center {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 80%;
-    max-width: 300px;
-    height: 100dvh;
-    background-color: white;
-    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
-    padding: 3rem;
-    z-index: 2;
-
-    transform: translateX(100%);
-    transition: transform 3s ease-in-out;
-
-    &--visible {
-      transform: translateX(0);
-    }
-
-    ul {
-      display: flex;
-      flex-direction: column;
-      gap: 1.6rem;
-    }
-
-    li a {
-      font-size: 1.4rem;
-    }
-
-    @media (min-width: 768px) {
-      position: static;
-      transform: none;
-      height: auto;
-      box-shadow: none;
-      padding: 0;
-
-      ul {
-        flex-direction: row;
-        gap: 6rem;
-      }
-    }
-
-    .navbar__close {
-      position: absolute;
-      top: 1.2rem;
-      right: 1.2rem;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-
-      @media (min-width: 768px) {
-        display: none;
-      }
-    }
-  }
-
   &__right {
     display: flex;
     gap: 1.6rem;
@@ -156,11 +112,73 @@ onUnmounted(() => {
       display: block;
 
       @media (min-width: 768px) {
-        all: unset;
         display: none;
       }
     }
   }
+
+  &__desktop {
+    display: none;
+
+    @media (min-width: 768px) {
+      display: flex;
+      justify-content: center;
+      margin-top: 2rem;
+
+      ul {
+        display: flex;
+        gap: 6rem;
+      }
+
+      li a {
+        font-size: 1.4rem;
+      }
+    }
+  }
+
+  &__mobile {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 80%;
+    max-width: 300px;
+    height: 100dvh;
+    background: white;
+    z-index: 10;
+    padding: 3rem;
+    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      gap: 1.6rem;
+    }
+
+    li a {
+      font-size: 1.4rem;
+    }
+
+    .navbar__close {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.2rem;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+    }
+  }
+}
+
+// Transition component
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.6s ease;
+}
+.slide-enter-from {
+  transform: translateX(200%);
+}
+.slide-leave-to {
+  transform: translateX(100%);
 }
 
 .overlay {
@@ -169,13 +187,8 @@ onUnmounted(() => {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(2px);
-  z-index: 1;
-  pointer-events: none;
-}
-
-.navbar__center--visible + .overlay {
-  z-index: 1;
+  z-index: 5;
 }
 </style>
