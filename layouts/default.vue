@@ -2,6 +2,8 @@
 import { useUiStore } from '@/stores/ui'
 
 const uiStore = useUiStore()
+const { toggleMenu } = uiStore
+const { isMenuVisible } = storeToRefs(uiStore)
 </script>
 
 <template>
@@ -9,7 +11,7 @@ const uiStore = useUiStore()
     <header>
       <ShopNavbar />
     </header>
-    <ShopOverlay v-if="uiStore.isMenuVisible" @click="uiStore.toggleMenu" />
+    <ShopOverlay v-if="isMenuVisible" @click="toggleMenu" />
     <slot />
     <ShopFooter />
   </div>
