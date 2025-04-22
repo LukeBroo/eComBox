@@ -11,9 +11,11 @@ const { isMenuVisible } = storeToRefs(uiStore)
     <header>
       <ShopNavbar />
     </header>
-    <ShopOverlay v-if="isMenuVisible" @click="toggleMenu" />
     <slot />
-    <ShopFooter />
+    <footer>
+      <ShopFooter />
+    </footer>
+    <ShopOverlay v-if="isMenuVisible" @click="toggleMenu" />
   </div>
 </template>
 

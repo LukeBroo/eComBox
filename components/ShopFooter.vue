@@ -41,7 +41,6 @@
   color: $font-primary-color;
   padding: 3.2rem 2rem;
   text-align: center;
-  border-top: 1px solid $font-secondary-color;
 
   &__content {
     display: flex;
