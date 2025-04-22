@@ -24,6 +24,8 @@ const heroContent = {
 </template>
 
 <style scoped lang="scss">
+@use 'sass:color';
+
 @mixin text-style($size, $weight) {
   font-size: $size;
   font-weight: $weight;
@@ -96,7 +98,7 @@ const heroContent = {
     transition: all 0.4s ease;
 
     &:hover {
-      background-color: darken($primary-color, 10%);
+      background-color: color.adjust($primary-color, $lightness: -10%);
     }
   }
 }
