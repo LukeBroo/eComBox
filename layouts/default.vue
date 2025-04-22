@@ -31,6 +31,31 @@ onUnmounted(() => {
         <span>Furniro</span>
       </div>
 
+      <!-- Desktop nav -->
+      <nav v-if="isDesktop" class="navbar__desktop">
+        <ul>
+          <li><NuxtLink to="/">Home</NuxtLink></li>
+          <li><NuxtLink to="/products">Products</NuxtLink></li>
+          <li><NuxtLink to="/about">About</NuxtLink></li>
+          <li><NuxtLink to="/contact">Contact</NuxtLink></li>
+        </ul>
+      </nav>
+
+      <!-- Mobile menu -->
+      <transition name="slide">
+        <nav v-show="isMenuVisible && !isDesktop" class="navbar__mobile">
+          <button class="navbar__close" aria-label="Close menu" @click="toggleMenu">
+            <Icon name="material-symbols:close-rounded" size="2.8rem" />
+          </button>
+          <ul>
+            <li><NuxtLink to="/">Home</NuxtLink></li>
+            <li><NuxtLink to="/products">Products</NuxtLink></li>
+            <li><NuxtLink to="/about">About</NuxtLink></li>
+            <li><NuxtLink to="/contact">Contact</NuxtLink></li>
+          </ul>
+        </nav>
+      </transition>
+
       <div class="navbar__right">
         <button aria-label="Search"><Icon name="material-symbols:search" size="2.8rem" /></button>
         <button aria-label="Favorites">
@@ -45,35 +70,12 @@ onUnmounted(() => {
       </div>
     </header>
 
-    <!-- Desktop nav -->
-    <nav v-if="isDesktop" class="navbar__desktop">
-      <ul>
-        <li><NuxtLink to="/">Home</NuxtLink></li>
-        <li><NuxtLink to="/shop">Shop</NuxtLink></li>
-        <li><NuxtLink to="/about">About</NuxtLink></li>
-        <li><NuxtLink to="/contact">Contact</NuxtLink></li>
-      </ul>
-    </nav>
-
-    <!-- Mobile menu -->
-    <transition name="slide">
-      <nav v-show="isMenuVisible && !isDesktop" class="navbar__mobile">
-        <button class="navbar__close" aria-label="Close menu" @click="toggleMenu">
-          <Icon name="material-symbols:close-rounded" size="2.8rem" />
-        </button>
-        <ul>
-          <li><NuxtLink to="/">Home</NuxtLink></li>
-          <li><NuxtLink to="/shop">Shop</NuxtLink></li>
-          <li><NuxtLink to="/about">About</NuxtLink></li>
-          <li><NuxtLink to="/contact">Contact</NuxtLink></li>
-        </ul>
-      </nav>
-    </transition>
-
     <!-- Overlay -->
     <div v-if="isMenuVisible && !isDesktop" class="overlay" @click="toggleMenu" />
 
     <slot />
+
+    <!-- Footer -->
     <footer>Footer</footer>
   </div>
 </template>
@@ -123,7 +125,6 @@ onUnmounted(() => {
     @media (min-width: 768px) {
       display: flex;
       justify-content: center;
-      margin-top: 2rem;
 
       ul {
         display: flex;
