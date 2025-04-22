@@ -1,9 +1,7 @@
 <script setup lang="ts">
-const isMenuVisible = ref(false)
+import { useUiStore } from '@/stores/ui'
 
-const toggleMenu = () => {
-  isMenuVisible.value = !isMenuVisible.value
-}
+const uiStore = useUiStore()
 </script>
 
 <template>
@@ -11,7 +9,7 @@ const toggleMenu = () => {
     <header>
       <ShopNavbar />
     </header>
-    <ShopOverlay v-if="isMenuVisible" @click="toggleMenu" />
+    <ShopOverlay v-if="uiStore.isMenuVisible" @click="uiStore.toggleMenu" />
     <slot />
     <ShopFooter />
   </div>

@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted } from 'vue'
-import { useUiStore } from '~/stores/ui'
+import { useUiStore } from '@/stores/ui'
 
 const uiStore = useUiStore()
+const { checkScreenSize, toggleMenu } = uiStore
+const { isMenuVisible, isDesktop } = storeToRefs(uiStore)
 
 onMounted(() => {
-  uiStore.checkScreenSize()
-  window.addEventListener('resize', uiStore.checkScreenSize)
+  checkScreenSize()
+  window.addEventListener('resize', checkScreenSize)
 })
 
 onUnmounted(() => {
-  window.removeEventListener('resize', uiStore.checkScreenSize)
+  window.removeEventListener('resize', checkScreenSize)
 })
 </script>
 
@@ -22,7 +24,7 @@ onUnmounted(() => {
     </div>
 
     <!-- Desktop nav -->
-    <nav v-if="uiStore.isDesktop" class="navbar__desktop">
+    <nav v-if="isDesktop" class="navbar__desktop">
       <ul>
         <li><NuxtLink to="/">Home</NuxtLink></li>
         <li><NuxtLink to="/products">Products</NuxtLink></li>
@@ -33,8 +35,8 @@ onUnmounted(() => {
 
     <!-- Mobile menu -->
     <transition name="slide">
-      <nav v-show="uiStore.isMenuVisible && !uiStore.isDesktop" class="navbar__mobile">
-        <button class="navbar__close" aria-label="Close menu" @click="uiStore.toggleMenu">
+      <nav v-show="isMenuVisible && !isDesktop" class="navbar__mobile">
+        <button class="navbar__close" aria-label="Close menu" @click="toggleMenu">
           <Icon name="material-symbols:close-rounded" size="2.8rem" />
         </button>
         <ul>
@@ -54,7 +56,7 @@ onUnmounted(() => {
       <button aria-label="Cart">
         <Icon name="material-symbols:shopping-cart-outline" size="2.8rem" />
       </button>
-      <button class="navbar__toggle" aria-label="Toggle menu" @click="uiStore.toggleMenu">
+      <button class="navbar__toggle" aria-label="Toggle menu" @click="toggleMenu">
         <Icon name="material-symbols:menu-rounded" size="2.8rem" />
       </button>
     </div>
