@@ -14,7 +14,7 @@ export default defineNuxtConfig({
   fonts: {
     defaults: {
       weights: [200, 400, 600, 800],
-      styles: ['normal', 'italic'],
+      styles: ['normal'],
     },
   },
   vite: {
