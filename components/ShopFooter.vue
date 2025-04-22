@@ -39,36 +39,45 @@
 .shop-footer {
   background-color: $secondary-color;
   color: $font-primary-color;
-  padding: 32px 0;
+  padding: 3.2rem 2rem;
   text-align: center;
+  border-top: 1px solid $font-secondary-color;
 
   &__content {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
-    margin-bottom: 32px;
+    margin-bottom: 3.2rem;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      text-align: left;
+    }
   }
 
   &__section {
-    flex: 1;
-    margin: 16px;
-    min-width: 320px;
+    flex: 1 1 300px;
+    margin: 1.6rem;
+
+    @media (max-width: 768px) {
+      flex: 1 1 100%;
+    }
   }
 
   &__title {
-    font-size: 1.9rem;
-    margin-bottom: 16px;
+    font-size: 1.6rem;
+    margin-bottom: 1.2rem;
   }
 
   &__text,
   &__list {
-    font-size: 1.4rem;
-    line-height: 1.5;
+    font-size: 1.2rem;
+    line-height: 1.6;
   }
 
   &__social-item {
     margin: 8px 0;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
   }
 
   &__link {
@@ -80,7 +89,7 @@
   &__bottom {
     font-size: 1.2rem;
     border-top: 1px solid #444;
-    padding-top: 16px;
+    padding-top: 1rem;
   }
 }
 </style>
