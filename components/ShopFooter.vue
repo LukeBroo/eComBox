@@ -14,6 +14,7 @@ const footerContent = {
       { name: 'Facebook', url: '#' },
       { name: 'Instagram', url: '#' },
       { name: 'Twitter', url: '#' },
+      { name: 'Other socials are comming' },
     ],
   },
 }
@@ -63,11 +64,6 @@ const footerContent = {
 </template>
 
 <style scoped lang="scss">
-@mixin text-style($size, $weight: 400) {
-  font-size: $size;
-  font-weight: $weight;
-}
-
 .footer {
   background-color: $secondary-color;
   color: $font-primary-color;
