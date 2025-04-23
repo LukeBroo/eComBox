@@ -1,42 +1,74 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const footerContent = {
+  about: {
+    title: 'About Us',
+    text: 'Your favorite furniture store.',
+  },
+  contact: {
+    title: 'Contact',
+    items: [{ text: 'Email: contact@furniro.com' }, { text: 'Phone: +1 123 456 789' }],
+  },
+  social: {
+    title: 'Follow Us',
+    links: [
+      { name: 'Facebook', url: '#' },
+      { name: 'Instagram', url: '#' },
+      { name: 'Twitter', url: '#' },
+    ],
+  },
+}
+</script>
 
 <template>
-  <footer class="shop-footer">
-    <div class="shop-footer__content">
-      <div class="shop-footer__section">
-        <h3 class="shop-footer__title">About Us</h3>
-        <p class="shop-footer__text">Your favorite store to fuck Nuxt.</p>
+  <footer class="footer">
+    <div class="footer__content">
+      <div class="footer__section">
+        <h3 class="footer__title">{{ footerContent.about.title }}</h3>
+        <p class="footer__text">{{ footerContent.about.text }}</p>
       </div>
-      <div class="shop-footer__section">
-        <h3 class="shop-footer__title">Contact</h3>
-        <ul class="shop-footer__list">
-          <li class="shop-footer__list-item">Email: contact@furniro.com</li>
-          <li class="shop-footer__list-item">Phone: +1 123 456 789</li>
+
+      <div class="footer__section">
+        <h3 class="footer__title">{{ footerContent.contact.title }}</h3>
+        <ul class="footer__list">
+          <li
+            v-for="item in footerContent.contact.items"
+            :key="item.text"
+            class="footer__list-item"
+          >
+            {{ item.text }}
+          </li>
         </ul>
       </div>
-      <div class="shop-footer__section">
-        <h3 class="shop-footer__title">Follow Us</h3>
-        <ul class="shop-footer__social-links">
-          <li class="shop-footer__social-item">
-            <NuxtLink to="#" class="shop-footer__link">Facebook</NuxtLink>
-          </li>
-          <li class="shop-footer__social-item">
-            <NuxtLink to="#" class="shop-footer__link">Instagram</NuxtLink>
-          </li>
-          <li class="shop-footer__social-item">
-            <NuxtLink to="#" class="shop-footer__link">Twitter</NuxtLink>
+
+      <div class="footer__section">
+        <h3 class="footer__title">{{ footerContent.social.title }}</h3>
+        <ul class="footer__social">
+          <li
+            v-for="link in footerContent.social.links"
+            :key="link.name"
+            class="footer__social-item"
+          >
+            <NuxtLink :to="link.url" class="footer__link">{{ link.name }}</NuxtLink>
           </li>
         </ul>
       </div>
     </div>
-    <div class="shop-footer__bottom">
-      <p class="shop-footer__copyright">&copy; 2025 Furniro. All rights reserved.</p>
+
+    <div class="footer__bottom">
+      <p class="footer__copyright">
+        &copy; {{ new Date().getFullYear() }} Furniro. All rights reserved.
+      </p>
     </div>
   </footer>
 </template>
 
 <style scoped lang="scss">
-.shop-footer {
+@mixin text-style($size, $weight: 400) {
+  font-size: $size;
+  font-weight: $weight;
+}
+
+.footer {
   background-color: $secondary-color;
   color: $font-primary-color;
   padding: 3.2rem 2rem;
@@ -44,50 +76,49 @@
 
   &__content {
     display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
+    flex-direction: column;
     margin-bottom: 3.2rem;
+    text-align: left;
 
-    @media (max-width: 768px) {
-      flex-direction: column;
-      text-align: left;
+    @media (min-width: $mobile-breakpoint) {
+      text-align: center;
+      flex-direction: row;
+      justify-content: space-around;
     }
   }
 
   &__section {
-    flex: 1 1 300px;
     margin: 1.6rem;
-
-    @media (max-width: 768px) {
-      flex: 1 1 100%;
-    }
   }
 
   &__title {
-    font-size: 1.6rem;
+    @include text-style(1.6rem, 600);
     margin-bottom: 1.2rem;
   }
 
   &__text,
-  &__list {
-    font-size: 1.2rem;
+  &__list,
+  &__social {
+    @include text-style(1.2rem);
     line-height: 1.6;
   }
 
+  &__list-item,
   &__social-item {
-    margin: 8px 0;
-    font-size: 1.2rem;
+    margin: 0.8rem 0;
   }
 
   &__link {
+    transition: color 0.3s ease;
+
     &:hover {
-      text-decoration: underline;
+      color: $primary-color;
     }
   }
 
   &__bottom {
-    font-size: 1.2rem;
-    border-top: 1px solid #444;
+    @include text-style(1.2rem);
+    border-top: 1px solid rgba($font-primary-color, 0.1);
     padding-top: 1rem;
   }
 }
