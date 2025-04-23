@@ -68,10 +68,6 @@ const { data: products, pending: loading, error: error } = useProducts()
   overflow: hidden;
   transition: transform 0.3s ease;
 
-  &:hover {
-    transform: translateY(-0.4rem);
-  }
-
   &__image {
     width: 100%;
     height: 20rem;
