@@ -2,6 +2,24 @@
 import { onMounted, onUnmounted } from 'vue'
 import { useUiStore } from '@/stores/ui'
 
+interface NavLink {
+  name: string
+  path: string
+}
+
+const navigationLinks: NavLink[] = [
+  { name: 'Home', path: '/' },
+  { name: 'Products', path: '/products' },
+  { name: 'About', path: '/#' },
+  { name: 'Contact', path: '/#' },
+]
+
+const navIcons = [
+  { name: 'Search', icon: 'material-symbols:search' },
+  { name: 'Favorites', icon: 'material-symbols:favorite-outline-rounded' },
+  { name: 'Cart', icon: 'material-symbols:shopping-cart-outline' },
+]
+
 const uiStore = useUiStore()
 const { checkScreenSize, toggleMenu } = uiStore
 const { isMenuVisible, isDesktop } = storeToRefs(uiStore)
@@ -26,10 +44,9 @@ onUnmounted(() => {
     <!-- Desktop nav -->
     <nav v-if="isDesktop" class="navbar__desktop">
       <ul>
-        <li><NuxtLink to="/">Home</NuxtLink></li>
-        <li><NuxtLink to="/products">Products</NuxtLink></li>
-        <li><NuxtLink to="/#">About</NuxtLink></li>
-        <li><NuxtLink to="/#">Contact</NuxtLink></li>
+        <li v-for="link in navigationLinks" :key="link.path">
+          <NuxtLink :to="link.path">{{ link.name }}</NuxtLink>
+        </li>
       </ul>
     </nav>
 
@@ -40,21 +57,16 @@ onUnmounted(() => {
           <Icon name="material-symbols:close-rounded" size="2.8rem" />
         </button>
         <ul>
-          <li><NuxtLink to="/">Home</NuxtLink></li>
-          <li><NuxtLink to="/products">Products</NuxtLink></li>
-          <li><NuxtLink to="/about">About</NuxtLink></li>
-          <li><NuxtLink to="/contact">Contact</NuxtLink></li>
+          <li v-for="link in navigationLinks" :key="link.path">
+            <NuxtLink :to="link.path">{{ link.name }}</NuxtLink>
+          </li>
         </ul>
       </nav>
     </transition>
 
     <div class="navbar__right">
-      <button aria-label="Search"><Icon name="material-symbols:search" size="2.8rem" /></button>
-      <button aria-label="Favorites">
-        <Icon name="material-symbols:favorite-outline-rounded" size="2.8rem" />
-      </button>
-      <button aria-label="Cart">
-        <Icon name="material-symbols:shopping-cart-outline" size="2.8rem" />
+      <button v-for="icon in navIcons" :key="icon.name" :aria-label="icon.name">
+        <Icon :name="icon.icon" size="2.8rem" />
       </button>
       <button class="navbar__toggle" aria-label="Toggle menu" @click="toggleMenu">
         <Icon name="material-symbols:menu-rounded" size="2.8rem" />
@@ -64,7 +76,6 @@ onUnmounted(() => {
 </template>
 
 <style scoped lang="scss">
-// Header
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -92,20 +103,20 @@ onUnmounted(() => {
     button {
       cursor: pointer;
     }
+  }
 
-    .navbar__toggle {
-      display: block;
+  &__toggle {
+    display: block;
 
-      @media (min-width: 768px) {
-        display: none;
-      }
+    @media (min-width: $mobile-breakpoint) {
+      display: none;
     }
   }
 
   &__desktop {
     display: none;
 
-    @media (min-width: 768px) {
+    @media (min-width: $mobile-breakpoint) {
       display: flex;
       justify-content: center;
 
@@ -125,12 +136,12 @@ onUnmounted(() => {
     top: 0;
     right: 0;
     width: 80%;
-    max-width: 300px;
+    max-width: 30rem;
     height: 100dvh;
-    background: white;
+    background: $secondary-color;
     z-index: 10;
     padding: 3rem;
-    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: -4px 0 10px rgba($font-primary-color, 0.1);
 
     ul {
       display: flex;
@@ -141,27 +152,29 @@ onUnmounted(() => {
     li a {
       font-size: 1.4rem;
     }
-
-    .navbar__close {
-      position: absolute;
-      top: 1.2rem;
-      right: 1.2rem;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-    }
+  }
+  &__close {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.2rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
   }
 }
 
-// Transition component
-.slide-enter-active,
-.slide-leave-active {
-  transition: transform 0.6s ease;
-}
-.slide-enter-from {
-  transform: translateX(200%);
-}
-.slide-leave-to {
-  transform: translateX(100%);
+.slide {
+  &-enter-active,
+  &-leave-active {
+    transition: transform 0.6s ease;
+  }
+
+  &-enter-from {
+    transform: translateX(200%);
+  }
+
+  &-leave-to {
+    transform: translateX(100%);
+  }
 }
 </style>
