@@ -127,6 +127,11 @@ onUnmounted(() => {
 
       li a {
         font-size: 1.4rem;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: $primary-color;
+        }
       }
     }
   }
