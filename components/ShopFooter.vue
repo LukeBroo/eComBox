@@ -76,13 +76,14 @@ const footerContent = {
 
   &__content {
     display: flex;
-    justify-content: space-around;
     flex-direction: column;
     margin-bottom: 3.2rem;
+    text-align: left;
 
     @media (min-width: $mobile-breakpoint) {
       text-align: center;
       flex-direction: row;
+      justify-content: space-around;
     }
   }
 
