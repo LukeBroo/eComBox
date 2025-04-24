@@ -6,14 +6,19 @@ const { product, loading } = useProduct(route.params.slug as string)
 <template>
   <section class="product-details">
     <div v-if="loading" class="product-details__loading">Loading...</div>
-
     <div v-else-if="!product" class="product-details__error">Product not found</div>
-
     <div v-else class="product-details__content">
       <div class="product-details__image-wrapper">
-        <img :src="product.image" :alt="product.title" class="product-details__image" />
+        <NuxtImg
+          :src="product.image"
+          :alt="product.title"
+          class="product-details__image"
+          format="webp"
+          loading="lazy"
+          placeholder
+          quality="90"
+        />
       </div>
-
       <div class="product-details__info">
         <h1 class="product-details__title">{{ product.title }}</h1>
         <p class="product-details__price">{{ product.price }}$</p>
@@ -24,7 +29,6 @@ const { product, loading } = useProduct(route.params.slug as string)
             Rating: {{ product.rating.rate }} ({{ product.rating.count }} reviews)
           </div>
         </div>
-
         <button class="product-details__button">Add to Cart</button>
       </div>
     </div>

@@ -5,14 +5,23 @@ const { data: products, pending: loading, error: error } = useProducts()
 <template>
   <section class="products">
     <h1 class="products__title">Products</h1>
-
     <div v-if="loading" class="products__loading">Loading...</div>
     <div v-else-if="error" class="products__error">
       Oops! Something went wrong: {{ error.message }}
     </div>
     <div v-else class="products__grid">
       <div v-for="product in products" :key="product.id" class="product-card">
-        <img :src="product.image" :alt="product.title" class="product-card__image" />
+        <NuxtImg
+          :src="product.image"
+          :alt="product.title"
+          class="product-card__image"
+          format="webp"
+          loading="lazy"
+          placeholder
+          quality="80"
+          width="320"
+          height="320"
+        />
         <div class="product-card__content">
           <h2 class="product-card__title">{{ product.title }}</h2>
           <p class="product-card__price">{{ product.price }}$</p>
