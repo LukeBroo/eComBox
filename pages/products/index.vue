@@ -1,4 +1,14 @@
 <script setup lang="ts">
+useHead({
+  title: 'Furniro - Products list',
+  meta: [
+    {
+      name: 'description',
+      content: 'Check our prodcuts and find something for yourself!',
+    },
+  ],
+})
+
 const { data: products, pending: loading, error: error } = useProducts()
 </script>
 

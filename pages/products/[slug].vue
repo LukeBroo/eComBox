@@ -1,6 +1,20 @@
 <script setup lang="ts">
 const route = useRoute()
 const { product, loading } = useProduct(route.params.slug as string)
+
+watchEffect(() => {
+  if (product.value) {
+    useHead({
+      title: product.value.title,
+      meta: [
+        {
+          name: 'description',
+          content: product.value.description,
+        },
+      ],
+    })
+  }
+})
 </script>
 
 <template>

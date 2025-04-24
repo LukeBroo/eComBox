@@ -1,4 +1,12 @@
 <script setup lang="ts">
+useHead({
+  title: 'Furniro - Modern Furniture Store',
+  meta: [
+    { name: 'description', content: 'Explore our wide range of modern furniture...' },
+    { name: 'keywords', content: 'furniture, modern furniture, home decor, etc.' },
+  ],
+})
+
 const heroContent = {
   label: 'New Arrival',
   title: 'Discover Our',
