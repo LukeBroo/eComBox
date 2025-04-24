@@ -15,9 +15,9 @@ const navigationLinks: NavLink[] = [
 ]
 
 const navIcons = [
-  { name: 'Search', icon: 'material-symbols:search' },
-  { name: 'Favorites', icon: 'material-symbols:favorite-outline-rounded' },
-  { name: 'Cart', icon: 'material-symbols:shopping-cart-outline' },
+  { name: 'Search', icon: 'material-symbols:search', path: '#' },
+  { name: 'Favorites', icon: 'material-symbols:favorite-outline-rounded', path: '#' },
+  { name: 'Cart', icon: 'material-symbols:shopping-cart-outline', path: '/cart' },
 ]
 
 const uiStore = useUiStore()
@@ -66,7 +66,9 @@ onUnmounted(() => {
 
     <div class="navbar__right">
       <button v-for="icon in navIcons" :key="icon.name" :aria-label="icon.name">
-        <Icon :name="icon.icon" size="2.8rem" />
+        <NuxtLink :to="icon.path">
+          <Icon :name="icon.icon" size="2.8rem" />
+        </NuxtLink>
       </button>
       <button class="navbar__toggle" aria-label="Toggle menu" @click="toggleMenu">
         <Icon name="material-symbols:menu-rounded" size="2.8rem" />
