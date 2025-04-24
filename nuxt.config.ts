@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/test-utils',
     '@pinia/nuxt',
+    'pinia-plugin-persistedstate/nuxt',
   ],
   fonts: {
     defaults: {
