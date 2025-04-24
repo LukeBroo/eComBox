@@ -1,6 +1,13 @@
 <script setup lang="ts">
 const route = useRoute()
+const cartStore = useCartStore()
 const { product, loading } = useProduct(route.params.slug as string)
+
+const addToCart = () => {
+  if (product.value) {
+    cartStore.addItem(product.value)
+  }
+}
 
 watchEffect(() => {
   if (product.value) {
@@ -43,7 +50,7 @@ watchEffect(() => {
             Rating: {{ product.rating.rate }} ({{ product.rating.count }} reviews)
           </div>
         </div>
-        <button class="product-details__button">Add to Cart</button>
+        <button class="product-details__button" @click="addToCart">Add to Cart</button>
       </div>
     </div>
   </section>
